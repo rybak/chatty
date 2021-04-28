@@ -146,6 +146,9 @@ public class SettingsUtil {
     public static void addLabeledComponent(JPanel panel, String labelSettingName, int x, int y, int w, int labelAlign, JComponent component, boolean stretchComponent) {
         JLabel label = createLabel(labelSettingName);
         label.setLabelFor(component);
+        if (label.getToolTipText() != null && component.getToolTipText() == null) {
+            component.setToolTipText(label.getToolTipText());
+        }
         panel.add(label, SettingsDialog.makeGbc(x, y, 1, 1, labelAlign));
         GridBagConstraints gbc = SettingsDialog.makeGbc(x+1, y, w, 1, GridBagConstraints.WEST);
         if (stretchComponent) {
