@@ -3762,16 +3762,7 @@ public class MainGui extends JFrame implements Runnable {
      * @param line 
      */
     public void printDebugIrc(final String line) {
-        if (SwingUtilities.isEventDispatchThread()) {
-            debugWindow.printLineIrc(line);
-        } else {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    debugWindow.printLineIrc(line);
-                }
-            });
-        }
+        GuiUtil.edt(() -> debugWindow.printLineIrc(line));
     }
     
     // User stuff
@@ -4752,17 +4743,7 @@ public class MainGui extends JFrame implements Runnable {
          */
         @Override
         public void settingChanged(final String setting, final int type, final Object value) {
-            if (SwingUtilities.isEventDispatchThread()) {
-                settingChangedInternal(setting, type, value);
-            } else {
-                SwingUtilities.invokeLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        settingChangedInternal(setting, type, value);
-                    }
-                });
-            }
+            GuiUtil.edt(() -> settingChangedInternal(setting, type, value));
         }
         
         private void settingChangedInternal(String setting, int type, Object value) {
@@ -5098,6 +5079,7 @@ public class MainGui extends JFrame implements Runnable {
     }
     
     public void cleanUp() {
+        // TODO is else branch missing here? -- maybe GuiUtil.edt() should be used here?
         if (SwingUtilities.isEventDispatchThread()) {
             hotkeyManager.cleanUp();
             setVisible(false);

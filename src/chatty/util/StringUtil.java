@@ -18,6 +18,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -57,9 +58,14 @@ public class StringUtil {
     public static String join(Collection<?> items, String delimiter) {
         return join(items, delimiter, -1, -1);
     }
-    
-    public static String join(Collection<?> items, String delimiter, Function<Object, String> func) {
-        return join(items, delimiter, -1, -1, func);
+
+    // TODO 1. generify
+    //   2. write a test for this function
+    //   3. refactor to use java.util.Stream
+    public static <T> String join(Collection<T> items, String delimiter, Function<T, String> func) {
+        return items.stream()
+                .map(func)
+                .collect(Collectors.joining(delimiter));
     }
     
     public static String join(Collection<?> items, String delimiter, int start) {
@@ -67,7 +73,7 @@ public class StringUtil {
     }
     
     public static String join(Collection<?> items, String delimiter, int start, int end) {
-        return join(items, delimiter, start, end, null);
+        return join(items, delimiter, start, end, Object::toString);
     }
     
     /**
@@ -82,10 +88,10 @@ public class StringUtil {
      * negative values or values larger than the Collection will include all
      * items after the start (when start is 0, then this is the amount of items
      * included)
-     * @param func Transform an element to a String
-     * @return The resulting String (never null)
+     * @param func Transform an element to a {@code String}
+     * @return The resulting {@code String} (never {@code null})
      */
-    public static String join(Collection<?> items, String delimiter, int start, int end, Function<Object, String> func) {
+    public static <T> String join(Collection<T> items, String delimiter, int start, int end, Function<T, String> func) {
         if (items == null || items.isEmpty()) {
             return "";
         }
@@ -93,10 +99,10 @@ public class StringUtil {
         end = end > -1 ? end : items.size();
         
         StringBuilder b = new StringBuilder();
-        Iterator<?> it = items.iterator();
+        Iterator<T> it = items.iterator();
         int i = 0;
         while (it.hasNext()) {
-            String next = func != null ? func.apply(it.next()) : it.next().toString();
+            String next = func.apply(it.next());
             if (i >= start && i < end) {
                 b.append(next);
                 if (it.hasNext() && i+1 < end) {
@@ -182,7 +188,7 @@ public class StringUtil {
      * whitespace characters that are not a space with a space (e.g. tabs).
      * 
      * @param s The String
-     * @see removeDuplicateWhitespace(String text)
+     * @see #removeDuplicateWhitespace(String text)
      * @return The modified String or null if the given String was null
      */
     public static String trimAll(String s) {
@@ -527,7 +533,7 @@ public class StringUtil {
     }
     
     /**
-     * See {@link replaceFunc(String, Pattern, Function)}.
+     * See {@link #replaceFunc(String, Pattern, Function)}.
      * 
      * @param input
      * @param regex
@@ -559,7 +565,7 @@ public class StringUtil {
     /**
      * Test the similarity between two Strings.
      * 
-     * {@link prepareForSimilarityComparison(String)} should normally be applied
+     * {@link #prepareForSimilarityComparison(String)} should normally be applied
      * to the Strings first.
      * 
      * @param a One String (must not be null)
@@ -636,7 +642,7 @@ public class StringUtil {
         // Create a map of bigram counts for the first String
         Map<Long, Integer> m = new HashMap<>(a.length());
         for (int i = 0; i < a.length() - 1; i++) {
-            /**
+            /*
              * Encoding two chars in one int seemed to have slightly better
              * performance than creating a lot of Strings.
              */
@@ -656,7 +662,7 @@ public class StringUtil {
                 m.put(part, c - 1);
             }
         }
-        /**
+        /*
          * Each String contains "a.length() - 1" bigrams, so this is dividing
          * by the number of total possible bigrams.
          */

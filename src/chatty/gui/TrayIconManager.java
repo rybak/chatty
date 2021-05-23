@@ -35,6 +35,7 @@ public class TrayIconManager {
             
             popup = new PopupMenu();
             MenuItem showItem = new MenuItem(Language.getString("trayCm.show"));
+            // TODO extract constants into class ActionCommands
             showItem.setActionCommand("show");
             popup.add(showItem);
             MenuItem exitItem = new MenuItem(Language.getString("trayCm.exit"));

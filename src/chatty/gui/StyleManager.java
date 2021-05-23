@@ -317,7 +317,8 @@ public class StyleManager implements StyleServer {
     public SimpleDateFormat getTimestampFormat() {
         return makeTimestampFormat("timestamp", null);
     }
-    
+
+    // TODO inline defaultValue -- it's always `null`
     public SimpleDateFormat makeTimestampFormat(String setting, SimpleDateFormat defaultValue) {
         String timestamp = settings.getString(setting);
         String timezone = settings.getString("timestampTimezone");

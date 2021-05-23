@@ -3,18 +3,17 @@ package chatty.util;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.Month;
 import java.time.MonthDay;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +24,7 @@ import java.util.regex.Pattern;
  */
 public class DateTime {
     
-    private static final SimpleDateFormat FULL_DATETIME = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ZZ");
+    private static final DateTimeFormatter FULL_DATETIME = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss ZZ");
     private static final SimpleDateFormat SDF = new SimpleDateFormat("HH:mm:ss");
     private static final SimpleDateFormat SDF2 = new SimpleDateFormat("HH:mm");
     private static final SimpleDateFormat SDF3 = new SimpleDateFormat("HH:mm:ss/SSS");
@@ -47,7 +46,7 @@ public class DateTime {
     }
     
     public static String fullDateTime() {
-        return currentTime(FULL_DATETIME);
+        return FULL_DATETIME.format(ZonedDateTime.now());
     }
     
     public static String currentTime() {
@@ -77,7 +76,7 @@ public class DateTime {
     }
     
     public static String formatFullDatetime(long time) {
-        return format(time, FULL_DATETIME);
+        return FULL_DATETIME.format(Instant.ofEpochMilli(time));
     }
     
     public static String format2(long time) {
@@ -146,6 +145,7 @@ public class DateTime {
         
         if (showSeconds)
             return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        // TODO green code: remove third parameter from the call
         return String.format("%02d:%02d", hours, minutes, seconds);
     }
 

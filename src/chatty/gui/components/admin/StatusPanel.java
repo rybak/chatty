@@ -330,6 +330,7 @@ public class StatusPanel extends JPanel {
                                 Parameters params = Parameters.create("");
                                 params.put("title", status.getText());
                                 params.put("game", game.getText());
+                                // TODO rewrite using java.util.Stream
                                 params.put("tag-ids", StringUtil.join(currentStreamTags, ",", o -> {
                                     return ((StreamTag) o).getId();
                                 }));

@@ -28,13 +28,15 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * Some Chatty-specific static helper methods.
+ * TODO: maybe move channel parsing function into separate class `Channels`. Cf. Effective Java's item about naming of utility classes
  * 
  * @author tduva
  */
 public class Helper {
     
     private static final Logger LOGGER = Logger.getLogger(Helper.class.getName());
-    
+
+    // TODO make private
     public static final DecimalFormat VIEWERCOUNT_FORMAT = new DecimalFormat();
     
     public static String formatViewerCount(int viewerCount) {
@@ -104,6 +106,7 @@ public class Helper {
     }
     
     /**
+     * TODO write tests for this method
      * Takes a Set of Strings and builds a single comma-separated String of
      * streams out of it.
      * 

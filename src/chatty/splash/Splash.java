@@ -79,7 +79,7 @@ public class Splash {
     private final static String thing = getThing();
     
     private static String getThing() {
-        if (Calendar.getInstance().get(Calendar.DAY_OF_YEAR) == 1) {
+        if (LocalDate.now().get(ChronoField.DAY_OF_YEAR) == 1) {
             return "Happy new year!";
         }
         String[] things = getThings();
@@ -87,23 +87,11 @@ public class Splash {
     }
 
     public static void initSplashScreen(final Point location) {
-        if (SwingUtilities.isEventDispatchThread()) {
-            drawOnSplashscreen(location);
-        } else {
-            SwingUtilities.invokeLater(() -> {
-                drawOnSplashscreen(location);
-            });
-        }
+        GuiUtil.edt(() -> drawOnSplashscreen(location));
     }
     
     public static void closeSplashScreen() {
-        if (SwingUtilities.isEventDispatchThread()) {
-            SplashWindow.closeSplashWindow();
-        } else {
-            SwingUtilities.invokeLater(() -> {
-                SplashWindow.closeSplashWindow();
-            });
-        }
+        GuiUtil.edt(SplashWindow::closeSplashWindow);
     }
     
     private static void drawOnSplashscreen(final Point location) {
