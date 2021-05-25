@@ -32,6 +32,9 @@
     * [x] write tests for serialization-deserialization _before_ implementation
     * [x] post config screenshot in discord
     * [x] update help HTML
+    * [ ] add tests for matchesChannel(null)
+    * [ ] add tests for Notification.channel(s) == null
+    * [ ] rebase
     * [ ] open PR
 - java.time
     > tduva — 23/05/2021
