@@ -16,6 +16,7 @@
 - Unit Tests
     * [ ] chatty.util.StringUtil.shortenTo(java.lang.String, int)
     * [ ] chatty.util.StringUtil.trimAll
+    * [ ] Parser (commands)
     * [ ] ...
 
 ## In development
@@ -36,9 +37,10 @@
     * [x] update help HTML
     * [x] add tests for matchesChannel(null)
     * [x] add tests for Notification.channel(s) == null
-    * [ ] run locally for a while
-    * [ ] rebase
-    * [ ] open PR
+    * [x] run locally for a while
+    * [x] rebase
+    * [x] open PR
+    * [ ] wait
 - java.time
     > tduva — 23/05/2021
     > Generally I don't really like refactoring unless an area is touched anyway or there's a good reason. What would be the advantage except it being cleaner?
