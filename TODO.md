@@ -1,6 +1,7 @@
 ## To Do
 
 - java.util.Stream
+    > see parts of branch wip-code-cleanup
     * [ ] ask in Discord
     * [ ] wait for answer in Discord
     * [ ] see TODOs in StringUtil
@@ -50,6 +51,8 @@
     > I suppose it would work for most stuff, but would have to be careful not to change behavior, especially where user-customized timestamps are involved.
     > andrybak — 23/05/2021
     > Risk of breaking behaviour will be mitigated by generously adding tests.
+    > ------
+    > see parts of branch wip-code-cleanup
     * [x] ask in Discord
     * [x] wait for answer in Discord
     * [ ] add unit tests for DateTime
